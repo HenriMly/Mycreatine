@@ -18,7 +18,6 @@ export const mockedProducts: Product[] = [
         description: "Soutien musculaire et récupération optimisée.",
         price: 32.9,
         stock: 80,
-        imageUrl: imageUrl,
     },
     {
         id: "3",

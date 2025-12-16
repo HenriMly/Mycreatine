@@ -38,3 +38,9 @@
 .product-card .price {
 	font-weight: 700;
 }
+
+.product-card .actions {
+	margin-top: 8px;
+	display: flex;
+	justify-content: center;
+}

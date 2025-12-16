@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { DecimalPipe, NgOptimizedImage } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { Product as ProductModel } from '../models/product.interface';
 
 @Component({
   selector: 'app-product',
-  imports: [NgOptimizedImage, DecimalPipe],
+  imports: [NgOptimizedImage, DecimalPipe, MatButtonModule],
   templateUrl: './product.html',
   styleUrl: './product.css',
 })

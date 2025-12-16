@@ -58,7 +58,7 @@ mat-card-content p {
   line-height: 1.4;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* clamp description to 2 lines */
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
@@ -67,7 +67,6 @@ mat-card-content p {
   margin: 6px 0;
 }
 
-/* Actions */
 mat-card-actions {
   display: flex;
   align-items: center;
