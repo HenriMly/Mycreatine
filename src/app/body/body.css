@@ -1,0 +1,133 @@
+:host {
+  display: block;
+  padding: 16px;
+  --surface: #ffffff;
+  --surface-2: #f6f7f9;
+  --border: #e5e7eb;
+  --text: #111111;
+  --muted: #4b5563;
+  --primary: #0a66ff;
+  --primary-contrast: #ffffff;
+  --focus: #111111;
+  color: var(--text);
+}
+
+/* Generic grid if multiple products are shown */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Product card */
+.example-card,
+mat-card.example-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 14px rgba(0,0,0,0.06);
+  transition: box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
+  overflow: hidden;
+}
+
+.example-card:hover,
+.example-card:focus-within {
+  border-color: #d1d5db;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.10);
+  transform: translateY(-2px);
+}
+
+/* Media */
+img[mat-card-image] {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  background: var(--surface-2);
+}
+
+/* Content */
+mat-card-content {
+  padding: 14px 16px 0 16px;
+}
+
+mat-card-content p {
+  margin: 0 0 8px 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* Actions */
+mat-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px 16px 16px;
+}
+
+button[matButton] {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  padding: 10px 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease, transform 80ms ease;
+}
+
+button[matButton]:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+button[matButton]:active {
+  transform: translateY(1px);
+}
+
+button[matButton]:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Make the first action a primary CTA */
+mat-card-actions button[matButton]:first-child {
+  border-color: transparent;
+  background: var(--primary);
+  color: var(--primary-contrast);
+}
+
+mat-card-actions button[matButton]:first-child:hover {
+  background: #0958df;
+}
+
+/* Price and metadata helpers if used later */
+.price {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.compare-price {
+  color: var(--muted);
+  text-decoration: line-through;
+  margin-left: 8px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+/* Keep legacy demo helper */
+.example-header-image {
+  background-image: url('https://material.angular.dev/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
