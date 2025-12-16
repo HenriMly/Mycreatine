@@ -1,0 +1,14 @@
+<div class="product-card" role="listitem">
+    <div class="media">
+        <img [ngSrc]="product().imageUrl || fallbackImage"
+                 width="640" height="640"
+                 (error)="onImgError($event)"
+                 alt="{{ product().title }}" />
+    </div>
+    <div class="content">
+        <h3 class="title">{{ product().title }}</h3>
+        <p class="desc">{{ product().description }}</p>
+        <p class="price">{{ product().price | number:'1.2-2' }}€</p>
+        <p class="stock">Stock : {{ product().stock }}</p>
+    </div>
+</div>
