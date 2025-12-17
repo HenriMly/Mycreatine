@@ -26,7 +26,7 @@
 }
 
 .product-card .desc {
-	margin: 0 0 6px 0;
+	margin: 0 0 6px 0; 
 	color: var(--muted);
 	line-height: 1.4;
 	display: -webkit-box;

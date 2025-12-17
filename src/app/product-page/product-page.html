@@ -1,0 +1,8 @@
+<section class="products">
+	<h1 class="heading">Nos produits</h1>
+	<div class="product-grid" role="list">
+  		@for (p of products(); track p.id) {
+    	<app-product [product]="p"></app-product>
+  		}
+	</div>
+</section>

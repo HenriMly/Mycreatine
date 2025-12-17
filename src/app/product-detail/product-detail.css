@@ -1,0 +1,42 @@
+.detail {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+	padding: 16px;
+}
+
+.detail .media img {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: var(--surface-2);
+}
+
+.detail .info .title {
+	margin: 0 0 8px 0;
+}
+
+.detail .info .desc {
+	color: var(--muted);
+	line-height: 1.5;
+}
+
+.detail .info .price {
+	font-weight: 700;
+	margin-top: 8px;
+}
+
+.detail .actions {
+	margin-top: 12px;
+	display: flex;
+	gap: 10px;
+}
+
+@media (max-width: 900px) {
+	.detail {
+		grid-template-columns: 1fr;
+	}
+}

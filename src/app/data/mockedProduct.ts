@@ -1,6 +1,7 @@
 import { Product } from "../models/product.interface";
 
 const imageUrl = "/image/mycreatinepot1.png";
+const imageUrl2 = "/image/mycreatinepot2.png";
 
 export const mockedProducts: Product[] = [
 
@@ -25,6 +26,6 @@ export const mockedProducts: Product[] = [
         description: "Boostez vos performances avec cette créatine premium.",
         price: 27.9,
         stock: 60,
-        imageUrl: imageUrl,
+        imageUrl: imageUrl2,
     },
 ];
