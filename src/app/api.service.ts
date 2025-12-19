@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of, switchMap } from 'rxjs';
 import { Product } from './models/product.interface';
+import { CreateOrderDto, Order } from './models/order.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { Product } from './models/product.interface';
 export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly BASE_URL = 'http://localhost:3000';
+  private readonly ORDERS_BASE_URL = 'https://strapi-production-2ff5.up.railway.app';
 
   listProducts(category?: string): Observable<Product[]> {
     const url = category
@@ -66,6 +68,12 @@ export class ApiService {
       imageUrl: absolute,
     };
   };
+
+
+  createOrder(payload: CreateOrderDto) : Observable<Order> {
+    const url = `${this.ORDERS_BASE_URL}/api/creatine-orders`;
+    return this.http.post<Order>(url, payload);
+  }
 }
 
 interface ApiListResponse {
