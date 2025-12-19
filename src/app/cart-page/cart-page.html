@@ -31,6 +31,7 @@
 			<p class="total">Total: {{ total() | currency:'EUR' }}</p>
 			<div class="actions">
 				<button matButton aria-label="Vider le panier" (click)="clear()">claer</button>
+				<a matButton aria-label="Passer à l'étape suivante" [routerLink]="['/information']">Suivant</a>
 			</div>
 		</div>
 	}
