@@ -38,8 +38,21 @@ export class CartPage {
   clear(): void {
     this.cart.clear();
   }
-  updateQty(id: string, value: string | number): void {
-    const qty = typeof value === 'string' ? Number.parseInt(value, 10) : value;
-    this.cart.updateQuantity(id, Number.isFinite(qty) ? qty : 1);
+  updateQty(id: string, value: string | number, event?: Event): void {
+    const raw = typeof value === 'string' ? Number.parseInt(value, 10) : value;
+    let qty = Number.isFinite(raw as number) ? Math.floor(raw as number) : 1;
+    if (qty < 1) qty = 1;
+    const item = this.items().find((i) => i.id === id);
+    const maxStock = item?.stock ?? Number.POSITIVE_INFINITY;
+    qty = Math.min(qty, maxStock);
+    this.cart.updateQuantity(id, qty);
+    const target = event?.target as HTMLInputElement | undefined;
+    if (target) target.value = String(qty);
+  }
+  getStockHint(item: { stock?: number }): string {
+    const stock = item.stock ?? 0;
+    return stock === 0
+      ? 'Rupture de stock'
+      : `Stock: ${stock} unité${stock > 1 ? 's' : ''} disponible${stock > 1 ? 's' : ''}`;
   }
 }

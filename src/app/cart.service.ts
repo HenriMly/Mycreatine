@@ -6,6 +6,7 @@ export interface CartItem {
   title: string;
   price: number;
   imageUrl?: string;
+  stock?: number;
   quantity: number;
 }
 
@@ -22,7 +23,9 @@ export class CartService {
       const idx = list.findIndex((i) => i.id === product.id);
       if (idx !== -1) {
         const next = [...list];
-        next[idx] = { ...next[idx], quantity: next[idx].quantity + quantity };
+        const maxStock = next[idx].stock ?? Number.POSITIVE_INFINITY;
+        const newQty = Math.min(next[idx].quantity + quantity, maxStock);
+        next[idx] = { ...next[idx], quantity: newQty };
         return next;
       }
       return [
@@ -32,6 +35,7 @@ export class CartService {
           title: product.title,
           price: product.price,
           imageUrl: product.imageUrl,
+          stock: product.stock,
           quantity,
         },
       ];
@@ -43,15 +47,14 @@ export class CartService {
   }
 
   updateQuantity(productId: string, qty: number): void {
-    const quantity = Math.max(0, Math.floor(qty));
+    const quantityRaw = Math.floor(qty);
+    const nextQuantity = Math.max(1, quantityRaw);
     this.items.update((list) => {
       const idx = list.findIndex((i) => i.id === productId);
       if (idx === -1) return list;
-      if (quantity === 0) {
-        return list.filter((i) => i.id !== productId);
-      }
       const next = [...list];
-      next[idx] = { ...next[idx], quantity };
+      const maxStock = next[idx].stock ?? Number.POSITIVE_INFINITY;
+      next[idx] = { ...next[idx], quantity: Math.min(nextQuantity, maxStock) };
       return next;
     });
   }
