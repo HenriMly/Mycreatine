@@ -2,7 +2,7 @@
     <img ngSrc="/image/mycreatine.png" alt="Mycreatine" class="logomycreatine" width="200" height="80"/>
     <div class="navcontainer">
         <nav aria-label="Navigation principale">
-            <a routerLink="/" routerLinkActive="active">Home</a>
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
             <a routerLink="/products" routerLinkActive="active">Products</a>
             <a routerLink="/about" routerLinkActive="active">About</a>
             <a routerLink="/contact" routerLinkActive="active">Contact</a>

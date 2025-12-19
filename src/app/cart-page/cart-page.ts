@@ -2,12 +2,25 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DecimalPipe, CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { CartService } from '../cart.service';
-
 
 @Component({
   selector: 'app-cart-page',
-  imports: [RouterLink, DecimalPipe, CurrencyPipe, NgOptimizedImage, MatButtonModule],
+  imports: [
+    RouterLink,
+    DecimalPipe,
+    CurrencyPipe,
+    NgOptimizedImage,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,8 +32,12 @@ export class CartPage {
   total = this.cart.total;
   count = this.cart.count;
 
-  remove(id: string): void { this.cart.remove(id); }
-  clear(): void { this.cart.clear(); }
+  remove(id: string): void {
+    this.cart.remove(id);
+  }
+  clear(): void {
+    this.cart.clear();
+  }
   updateQty(id: string, value: string | number): void {
     const qty = typeof value === 'string' ? Number.parseInt(value, 10) : value;
     this.cart.updateQuantity(id, Number.isFinite(qty) ? qty : 1);

@@ -2,37 +2,58 @@
 	<h1 id="cart-heading" class="heading">Panier</h1>
 
 	@if (items().length === 0) {
-		<p role="status">vide</p>
+		<mat-card class="empty-card" role="status" aria-live="polite" aria-labelledby="empty-title">
+			<mat-card-header>
+				<mat-icon aria-hidden="true">shopping_cart</mat-icon>
+				<mat-card-title id="empty-title">Votre panier est vide</mat-card-title>
+			</mat-card-header>
+			<mat-card-content>
+				<p>Découvrez nos produits et ajoutez vos favoris.</p>
+			</mat-card-content>
+			<mat-card-actions>
+				<a mat-raised-button color="primary" [routerLink]="['/products']" aria-label="Parcourir les produits">Voir les produits</a>
+			</mat-card-actions>
+		</mat-card>
 	} @else {
-		<div class="cart-list" role="list">
+		<div class="cart-list" role="list" aria-label="Articles du panier">
 			@for (item of items(); track item.id) {
-				<div class="cart-item" role="listitem">
-					<a class="media" [routerLink]="['/product', item.id]" aria-label="Voir {{ item.title }}">
-						<img [ngSrc]="item.imageUrl || '/image/NO-Image.jpg'" width="160" height="160" alt="{{ item.title }}" />
-					</a>
-					<div class="info">
+				<mat-card class="cart-item" role="listitem">
+					<div class="media">
+						<a [routerLink]="['/product', item.id]" aria-label="Voir {{ item.title }}">
+							<img [ngSrc]="item.imageUrl || '/image/NO-Image.jpg'" width="160" height="160" alt="{{ item.title }}" />
+						</a>
+					</div>
+					<mat-card-content class="info">
 						<h2 class="title"><a [routerLink]="['/product', item.id]">{{ item.title }}</a></h2>
 						<p class="price">Prix: {{ item.price | currency:'EUR' }}</p>
-						<label class="qty-label" for="qty-{{ item.id }}">Quantité</label>
-						<input id="qty-{{ item.id }}" type="number" min="0" [value]="item.quantity"
-									 (change)="updateQty(item.id, $any($event.target).value)"
-									 (blur)="updateQty(item.id, $any($event.target).value)"
-									 aria-describedby="qty-help-{{ item.id }}" />
-						<div class="item-actions">
-							<button matButton aria-label="Retirer {{ item.title }}" (click)="remove(item.id)">Retirer</button>
+						<div class="qty-group">
+							<mat-form-field appearance="fill">
+								<mat-label>Quantité</mat-label>
+								<input matInput type="number" id="qty-{{ item.id }}" min="1" [value]="item.quantity"
+										(change)="updateQty(item.id, $any($event.target).value)" />
+								<mat-hint>Saisissez une quantité positive</mat-hint>
+							</mat-form-field>
 						</div>
-					</div>
-				</div>
+					</mat-card-content>
+					<mat-card-actions class="item-actions">
+						<button mat-stroked-button color="warn" aria-label="Retirer {{ item.title }}" (click)="remove(item.id)">Retirer</button>
+					</mat-card-actions>
+				</mat-card>
 			}
 		</div>
 
-		<div class="summary" role="region" aria-label="Résumé du panier">
-			<p class="count">Articles: {{ count() }}</p>
-			<p class="total">Total: {{ total() | currency:'EUR' }}</p>
-			<div class="actions">
-				<button matButton aria-label="Vider le panier" (click)="clear()">claer</button>
-				<a matButton aria-label="Passer à l'étape suivante" [routerLink]="['/information']">Suivant</a>
-			</div>
-		</div>
+		<mat-card class="summary" role="region" aria-label="Résumé du panier">
+			<mat-card-header>
+				<mat-card-title>Résumé du panier</mat-card-title>
+			</mat-card-header>
+			<mat-card-content>
+				<p class="count">Articles: {{ count() }}</p>
+				<p class="total">Total: {{ total() | currency:'EUR' }}</p>
+			</mat-card-content>
+			<mat-card-actions class="actions">
+				<button mat-stroked-button color="warn" aria-label="Vider le panier" (click)="clear()">Vider le panier</button>
+				<a mat-raised-button color="primary" aria-label="Passer à l'étape suivante" [routerLink]="['/information']">Suivant</a>
+			</mat-card-actions>
+		</mat-card>
 	}
 </section>
