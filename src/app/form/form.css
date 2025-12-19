@@ -1,0 +1,13 @@
+form {
+  display: inline-flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.email-field {
+  flex: 1;
+  min-width: 250px;
+}
+
+
