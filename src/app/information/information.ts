@@ -49,8 +49,24 @@ import { CreateOrderDto } from '../models/order.interface';
     </div>
 
     <div>
-      <input id="coupon" ngModel name="coupon" type="text" placeholder="coupon" />
-      <button mat-button (click)="applyCoupon()">Appliquer le code promo</button>
+      <label for="coupon">Code promo</label>
+      <input
+        id="coupon"
+        [ngModel]="coupon()"
+        (ngModelChange)="coupon.set($event)"
+        name="coupon"
+        type="text"
+        placeholder="Code promo"
+        aria-describedby="coupon-status"
+      />
+      <button mat-button type="button" (click)="applyCoupon()">Appliquer le code promo</button>
+      <div id="coupon-status" [attr.aria-live]="couponError() ? 'assertive' : 'polite'">
+        @if (isCouponApplied()) {
+        <span role="status">Code appliqué: {{ coupon().trim() }}</span>
+        } @else if (couponError()) {
+        <span role="alert">{{ couponError() }}</span>
+        }
+      </div>
     </div>
 
     <form #userForm="ngForm" (ngSubmit)="infoForm(userForm.value)">
@@ -97,6 +113,7 @@ export class Information {
   items = this.cart.items;
   readonly coupon = signal<string>('');
   readonly isCouponApplied = signal<boolean>(false);
+  readonly couponError = signal<string | null>(null);
 
   readonly discountedTotal = computed<number>(() => {
     const rawTotal = this.cart.total();
@@ -117,7 +134,11 @@ export class Information {
 
   applyCoupon(): void {
     const code = this.coupon().trim().toLowerCase();
-    this.isCouponApplied.set(code === 'crea10');
+    const applied = code === 'crea10';
+    this.isCouponApplied.set(applied);
+    this.couponError.set(
+      !applied && code.length > 0 ? 'Code promo invalide. Vérifiez et réessayez.' : null
+    );
   }
 
   infoForm(value: {
@@ -134,7 +155,14 @@ export class Information {
       return;
     }
 
-    const total = this.discountedTotal();
+    const code = this.coupon().trim().toLowerCase();
+    const typedCoupon = code.length > 0;
+    if (typedCoupon && !this.isCouponApplied()) {
+      this.couponError.set('Code promo invalide. Vérifiez et réessayez.');
+      return;
+    }
+
+    const total = this.isCouponApplied() ? this.discountedTotal() : this.cart.total();
 
     const dto: CreateOrderDto = {
       data: {
@@ -153,7 +181,7 @@ export class Information {
         productsQuantity: {
           data: items.map((i) => ({ id: i.id, quantity: i.quantity })),
         },
-        total: this.cart.total(),
+        total,
       },
     };
 
