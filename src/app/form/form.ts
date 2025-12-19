@@ -14,6 +14,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class Form {
   submitForm(value: any) {
-    console.log('Form submitted with value:', value);
+    console.log(value);
   }
 }
