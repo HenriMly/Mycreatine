@@ -40,7 +40,7 @@ import { CartService } from '../cart.service';
     <input ngModel #test="ngModel" name="adresse" required type="text" placeholder='Your Adresse' />
     <input ngModel #test="ngModel" name="city" required type="text" placeholder='Your City' />
     <input ngModel #test="ngModel" name="zip" required type="text" placeholder='Your ZIP Code' />
-    <input ngModel #test="ngModel" name="phone" required type="tel" placeholder='Your phone' />
+    <input ngModel #test="ngModel" name="country" required type="text" placeholder='Your Country' />
 
     <button type='submit' [disabled]="test.invalid">Submit</button>
   </form>
