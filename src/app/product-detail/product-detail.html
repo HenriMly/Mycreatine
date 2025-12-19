@@ -12,14 +12,13 @@
 			<p class="price">{{ p.price | currency:'EUR' }}</p>
 			<p class="stock" [attr.aria-live]="'polite'">Stock: {{ p.stock }}</p>
 			<div class="actions">
-				<button matButton [disabled]="p.stock === 0" aria-label="Ajouter {{ p.title }} au panier">
-					Ajouter au panier
+				<button matButton [disabled]="p.stock === 0" (click)="onAddToCart()" aria-label="Ajouter {{ p.title }} au panier">
+					Ajouter
 				</button>
 				<a routerLink="/products" mat-button aria-label="Retour produits">Retour</a>
 			</div>
 		</div>
 	} @else {
-		<p>Produit introuvable.</p>
-		<a routerLink="/products" mat-button>Retour aux produits</a>
+		<p>introuvable</p>
 	}
 </section>

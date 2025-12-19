@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of, switchMap } from 'rxjs';
 import { Product } from './models/product.interface';
 
 @Injectable({
@@ -20,9 +20,35 @@ export class ApiService {
   }
 
   getProductById(id: string | number): Observable<Product | null> {
-    const url = `${this.BASE_URL}/products/creatine/${encodeURIComponent(String(id))}`;
-    return this.http.get<ApiItemResponse>(url).pipe(
-      map((res) => (res?.data ? this.mapApiProduct(res.data) : null))
+    const itemId = encodeURIComponent(String(id));
+    const primary$ = this.http
+      .get<ApiItemResponse>(`${this.BASE_URL}/products/${itemId}`)
+      .pipe(
+        map((res) => (res?.data ? this.mapApiProduct(res.data) : null)),
+        catchError(() => of(null))
+      );
+
+    const byCategory$ = this.http
+      .get<ApiItemResponse>(`${this.BASE_URL}/products/creatine/${itemId}`)
+      .pipe(
+        map((res) => (res?.data ? this.mapApiProduct(res.data) : null)),
+        catchError(() => of(null))
+      );
+
+    const listFallback$ = this.listProducts().pipe(
+      map((items) => items.find((p) => p.id === String(id)) ?? null),
+      catchError(() => of(null))
+    );
+
+    const listCategoryFallback$ = this.listProducts('creatine').pipe(
+      map((items) => items.find((p) => p.id === String(id)) ?? null),
+      catchError(() => of(null))
+    );
+
+    return primary$.pipe(
+      switchMap((p) => (p ? of(p) : byCategory$)),
+      switchMap((p) => (p ? of(p) : listFallback$)),
+      switchMap((p) => (p ? of(p) : listCategoryFallback$))
     );
   }
 

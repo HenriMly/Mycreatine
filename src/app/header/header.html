@@ -1,5 +1,5 @@
 <header>
-    <img src="/image/mycreatine.png" alt="Mycreatine" class="logomycreatine"/>
+    <img ngSrc="/image/mycreatine.png" alt="Mycreatine" class="logomycreatine" width="200" height="80"/>
     <div class="navcontainer">
         <nav aria-label="Navigation principale">
             <a routerLink="/" routerLinkActive="active">Home</a>
@@ -7,6 +7,7 @@
             <a routerLink="/about" routerLinkActive="active">About</a>
             <a routerLink="/contact" routerLinkActive="active">Contact</a>
             <a routerLink="/blog" routerLinkActive="active">Blog</a>
+            <a routerLink="/cart" routerLinkActive="active" aria-label="Ouvrir le panier">Panier ({{ count() }})</a>
         </nav>
     </div>
 </header>

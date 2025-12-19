@@ -11,19 +11,15 @@ import { Subscription } from 'rxjs';
   styleUrl: './product-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductPage implements OnInit, OnDestroy {
+export class ProductPage implements OnInit {
   private readonly api = inject(ApiService);
   private sub?: Subscription;
   readonly products = signal<ProductModel[]>([]);
 
   ngOnInit(): void {
     this.sub = this.api.listProducts('creatine').subscribe({
-      next: (items) => this.products.set(items),
-      error: () => this.products.set([]),
+      next: (items) => this.products.set(items)
     });
   }
 
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-  }
 }
